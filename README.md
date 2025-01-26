@@ -1,3 +1,3 @@
-Frontend - FLUTTER
-Backend - NODE JS
+Frontend - FLUTTER,
+Backend - NODE JS,
 Database - POSTGRESQL
