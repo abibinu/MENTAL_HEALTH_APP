@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); // For password hashing
 const pool = require('./db'); // Import PostgreSQL connection pool
-const jwt = require('jsonwebtoken');
-
+const moodLogsRouter = require('./moodLogs'); 
 
 const app = express();
 
