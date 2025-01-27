@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> registerUser(String name, String email, String password) async {
-    const String url = 'http://192.168.29.233:5000/register';
+    const String url = 'http://192.168.51.233:5000/register';
     setState(() {
       isLoading = true;
     });
@@ -213,7 +213,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF2575FC), // Updated to new theme color
+                              backgroundColor: Color(
+                                  0xFF2575FC), // Updated to new theme color
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
