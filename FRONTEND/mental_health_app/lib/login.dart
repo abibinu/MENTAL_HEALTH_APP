@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -43,7 +44,12 @@ class _LoginPageState extends State<LoginPage> {
 
         // Validate response fields
         if (responseData['message'] != null && responseData['name'] != null) {
-          // No session management, just show success message
+          final SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          sharedPreferences.setInt('user_id', responseData['user_id'] as int);
+          sharedPreferences.setString('name', responseData['name'] as String);
+          print(
+              "stored: ${sharedPreferences.getInt('user_id')} and ${sharedPreferences.getString('name')}");
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
                 content:
@@ -183,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 final email = emailController.text.trim();
                                 final password = passwordController.text.trim();
 

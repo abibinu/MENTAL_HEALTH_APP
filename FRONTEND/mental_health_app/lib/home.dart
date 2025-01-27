@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_app/explore_more.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'quotes_section.dart'; // Import the QuotesSection class
 import 'profile.dart'; // Import the ProfilePage class
 import 'settings.dart'; // Import the SettingsPage class
 
-class HomePage extends StatelessWidget {
-  final String username; // Declare a variable to hold the username
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
 
-  // Constructor to accept the username
-  HomePage({required this.username});
+class _HomePageState extends State<HomePage> {
+  String username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      username = sharedPreferences.getString('name') ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

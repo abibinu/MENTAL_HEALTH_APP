@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,8 +12,16 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Navigate to the Login page after 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/login');
+    Future.delayed(Duration(seconds: 3), () async {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      print(
+          "retrieved: ${sharedPreferences.getInt('user_id')} and ${sharedPreferences.getString('name')}");
+      if (sharedPreferences.getString('name') != null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
     });
   }
 

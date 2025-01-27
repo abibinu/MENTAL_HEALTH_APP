@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("App started");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mental Health Companion',
@@ -40,10 +41,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/login': (context) => LoginPage(), // login page
         '/register': (context) => RegisterPage(), // register page
-        '/home': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments;
-          return HomePage(username: args as String);
-        }, // home page
+        '/home': (context) => HomePage(), // home page
         '/profile': (context) => ProfilePage(), // profile route
         '/settings': (context) => SettingsPage(), // settings route
         '/tasks': (context) => TasksPage(), // tasks route

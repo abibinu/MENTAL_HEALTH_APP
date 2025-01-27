@@ -19,8 +19,13 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.remove('userToken'); // Clear the session data
+                SharedPreferences sharedPreferences =
+                    await SharedPreferences.getInstance();
+                await sharedPreferences
+                    .remove('user_id'); // Clear the session data
+                await sharedPreferences.remove('name');
+                print(
+                    'session cleared: ${sharedPreferences.getInt('user_id')} and ${sharedPreferences.getString('name')}');
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/login', (route) => false);
               },

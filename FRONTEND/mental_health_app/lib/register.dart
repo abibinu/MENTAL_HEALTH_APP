@@ -67,11 +67,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User registered successfully!')),
+          SnackBar(
+              content: Text('User registered successfully! Please login.')),
         );
 
         // Navigate to HomePage with username using named route
-        Navigator.pushNamed(context, '/home', arguments: name);
+        Navigator.pushNamed(context, '/login');
       } else {
         final error = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(

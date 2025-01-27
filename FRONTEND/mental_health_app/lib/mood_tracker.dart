@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart'; // For charts (add to pubspec.yaml)
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MoodTrackerPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class MoodTrackerPage extends StatefulWidget {
 class _MoodTrackerPageState extends State<MoodTrackerPage> {
   final TextEditingController _noteController = TextEditingController();
   String? _selectedMood;
-  int _userId = 1; // Set a valid integer user ID for testing
+  int _userId = 0; // Set a valid integer user ID for testing
   bool _isLoading = false;
   List<Map<String, dynamic>> _moodLogs = [];
   Map<String, double> _moodAnalytics = {};
@@ -21,7 +22,15 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
   @override
   void initState() {
     super.initState();
-    _fetchMoodLogs();
+    _loadUserid();
+  }
+
+  Future<void> _loadUserid() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      _userId = sharedPreferences.getInt('user_id') ?? '' as int;
+    });
+    _fetchMoodLogs(); // Fetch mood logs after user ID is loaded
     _fetchMoodAnalytics();
   }
 
@@ -189,20 +198,22 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
               SizedBox(height: 10),
               _isLoading
                   ? Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _moodLogs.length,
-                      itemBuilder: (context, index) {
-                        final log = _moodLogs[index];
-                        return ListTile(
-                          leading: Icon(Icons.mood),
-                          title: Text(log['mood']),
-                          subtitle: Text(log['note'] ?? ''),
-                          trailing: Text(log['logged_at']),
-                        );
-                      },
-                    ),
+                  : _moodLogs.isEmpty
+                      ? Text('No logs yet.')
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _moodLogs.length,
+                          itemBuilder: (context, index) {
+                            final log = _moodLogs[index];
+                            return ListTile(
+                              leading: Icon(Icons.mood),
+                              title: Text(log['mood']),
+                              subtitle: Text(log['note'] ?? ''),
+                              trailing: Text(log['logged_at']),
+                            );
+                          },
+                        ),
               SizedBox(height: 20),
 
               // Analytics Section
