@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mental_health_app/home.dart';
 import 'package:mental_health_app/mood_tracker.dart';
 import 'package:mental_health_app/tasks.dart';
+import 'main_screen.dart';
 import 'splash_screen.dart'; // Import your SplashScreen file
 import 'login.dart'; // Import your Login file
 import 'register.dart'; // Import your Register file
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
+        '/main': (context) => MainScreen(),
         '/login': (context) => LoginPage(), // login page
         '/register': (context) => RegisterPage(), // register page
         '/home': (context) => HomePage(), // home page

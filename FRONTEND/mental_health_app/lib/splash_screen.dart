@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print(
           "retrieved: ${sharedPreferences.getInt('user_id')} and ${sharedPreferences.getString('name')}");
       if (sharedPreferences.getString('name') != null) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/main');
       } else {
         Navigator.pushReplacementNamed(context, '/login');
       }

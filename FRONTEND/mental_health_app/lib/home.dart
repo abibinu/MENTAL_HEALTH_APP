@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mental_health_app/explore_more.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'quotes_section.dart'; // Import the QuotesSection class
-import 'profile.dart'; // Import the ProfilePage class
-import 'settings.dart'; // Import the SettingsPage class
+import 'quotes_section.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -62,60 +60,21 @@ class _HomePageState extends State<HomePage> {
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(
-                      78, 177, 225, 255), // Inverse primary color
+                  color: const Color.fromARGB(78, 177, 225, 255),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.lightbulb,
-                        color: const Color.fromARGB(255, 238, 255, 0),
+                        color: Color.fromARGB(255, 132, 69, 199),
                         size: 40), // Bulb icon color
 
                     Expanded(
-                      child:
-                          QuotesSection(), // Correctly use the QuotesSection widget
+                      child: QuotesSection(),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 20),
-
-              // Navigation Cards (Quick Actions)
-              Text(
-                'Quick Actions',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildQuickAction(
-                    context,
-                    icon: Icons.task,
-                    label: 'Tasks',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/tasks');
-                    },
-                  ),
-                  _buildQuickAction(
-                    context,
-                    icon: Icons.mood,
-                    label: 'Mood Tracker',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/mood_tracker');
-                    },
-                  ),
-                  _buildQuickAction(
-                    context,
-                    icon: Icons.settings,
-                    label: 'Settings',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/settings');
-                    },
-                  ),
-                ],
               ),
               SizedBox(height: 20),
 
@@ -123,71 +82,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0, // Update dynamically based on the selected tab
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
-            );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Quick Action Widget
-  Widget _buildQuickAction(BuildContext context,
-      {required IconData icon,
-      required String label,
-      required VoidCallback onTap}) {
-    Color backgroundColor;
-
-    // Set background color based on the label
-    if (label == 'Tasks') {
-      backgroundColor = Colors.green; // Change to green
-    } else if (label == 'Mood Tracker') {
-      backgroundColor = Color(0xFF2575FC); // No change
-    } else if (label == 'Settings') {
-      backgroundColor = Colors.grey; // Change to grey
-    } else {
-      backgroundColor = Color(0xFF2575FC); // Default color
-    }
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          CircleAvatar(
-            backgroundColor: backgroundColor,
-            radius: 30,
-            child: Icon(icon, color: Colors.white, size: 30),
-          ),
-          SizedBox(height: 8),
-          Text(label, style: TextStyle(fontSize: 14)),
-        ],
       ),
     );
   }
