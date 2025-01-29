@@ -4,10 +4,13 @@ const cors = require('cors');
 const bcrypt = require('bcrypt'); // For password hashing
 const pool = require('./db'); // Import PostgreSQL connection pool
 const moodLogsRouter = require('./moodLogs');
-
 const app = express();
+const chatbotRouter = require('./dialogflow');
+
+app.use('/api', chatbotRouter);
 
 app.use(cors());
+
 app.use(bodyParser.json());
 
 app.use('/api', moodLogsRouter);

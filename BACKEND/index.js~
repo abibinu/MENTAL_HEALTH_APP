@@ -3,12 +3,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); // For password hashing
 const pool = require('./db'); // Import PostgreSQL connection pool
-const moodLogsRouter = require('./moodLogs'); 
+const moodLogsRouter = require('./moodLogs');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use('/api', moodLogsRouter);
+
 
 // Default route
 app.get('/', (req, res) => {

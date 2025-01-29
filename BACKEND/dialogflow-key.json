@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "mood-assistant-jrty",
+  "private_key_id": "b4959b7800b1ae2e7313c4809a15842edf0fddb0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDAiGDlav+XSDZP\nzjYZSrDK1mGCicySUVgoujN4Q+trPyxqFdEpCmo3OAQXD7gmSd3p5MXW+/UHd96O\ncAOVAKmSo6B7bAbUE29qg26B6mt4iYQtYoqZL4GNuoulvCT4Bj0uUXYcwTb9hqHq\nQSbZEAhtIe0xw+Uxp/faAPDNQCKLldwRdMfbAW94qTcjj567K/crM24m/wFlT05l\nlXOkX/qD0QdFIr4DGW/Lwi/lrPtM7Yh3hEf7IbKNO3w5nlxdBDyKRg7izqC1wpu5\nraV6qiAoqC97z93oa2Vpf6ctfiDJ/G6rvH8HwGw+Sp1XJ8vWMq3qdztrsbzM0Wmg\niHfwgwY9AgMBAAECggEAA8P3Dy2ZS5pmM4ffL33yOLlaJV0wEtGD9aH0pT7A0TNm\nWTnNgi25t5RBIjlUuuz5adxnUSXS3D9IK0V+EHE3n85S8m8BsC6kIHNrGx/cU7pu\nyxtxBf9zm3PBTO/B0lb+5dPCiVvvCSTTsFrvWVHytD20X6OK7T5xfsJDc2Q0eMHg\nHseE+0TV2JpHzKZhLZyjGSjxdBhnDS7ntk3rmmALiYY9O8BRlaxNZoWThXcow8IT\nhA3h/Z7U3RzEKdacHYLEqJ/ve7vDFAVxIqMXgnCY6xqHo8gIsDYKp3Zb00RwmFk+\n8yf/0Dna+aMwUMFFhNPU2v3P8NGb/Z0c5b3cvTH7QQKBgQDpcwESmQXEP65oxmQT\nxCucntH9K4jXmYqwgIueI2UABv988vGOLuXM8aqp1MsjvRkJFqp9ZOpYpr2XZCP2\nPQQNrU0oCb5esyNzrCRQT0oR2rlsKksepZLfTEgXM8zttqXgrtjKozjwo9L1RqAa\nDp/Q1yrPEWz18OgcaHURcz2V/QKBgQDTIYt5LqVp7JvbArU9LEP4H578CNJ1LP5o\noCf2GaRdSeIEKAoSuGmMN9GCwxo4C+Rrx25Hg+1BcezWSGqUcAO+icRm45mblMSS\n8OFVQ1I0Az7BQk36YZuVitCLtLvDOIThsWchjGQXSr5ehsBDKThZylCUxWmDwZOd\n1oHaa1oFQQKBgQCFTBqHsQJ+7VG8F9PbCX9RfcovgiUv3kc3wx51nIY2PsixYtMU\nuaiTnkYxlQStEnNyIhQVZ4L8PbEx+YcjOfHPkW3l97JQxn7utJNDnBKSIU8Q+RFN\nnYNAp4DeZsCT11/d7FhzVEHV/eUeEkamukT87W9PLwcFY5pVZju6TBAVTQKBgBCw\nChId+b0RkpAQ+rpHEWg/N5W8LMZONB2Y6w+sny0wdcjWUVWBdfY7QzgOq7faWMec\nD79fUhVmJ84YEzSAVgttYDSxsKZ3b8Idf/H5TDoIN6GW2Ar+RAnh2vHv6xdXFEmy\nd/BS5GZi5gEarX+hdm7CavQXVmuvlTdYiRL2gTsBAoGBAJIZmyAcq/cHfWbFTzyc\nbkY+l9Jf4y30EX02yJnxQWvIFc+pddCGEpe/C/ltFVLridAj3F5KSL4kcPb62nRM\naAOBkCy2yaGBQTBdB4ALYk08kg+GlFL+iApDQJ60upmUgGe7CVCtzqu8wofJZ/OY\nZy6HWDvEgq34LQZa8X9rqEWi\n-----END PRIVATE KEY-----\n",
+  "client_email": "mood-assistant@mood-assistant-jrty.iam.gserviceaccount.com",
+  "client_id": "100797187704187656110",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mood-assistant%40mood-assistant-jrty.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

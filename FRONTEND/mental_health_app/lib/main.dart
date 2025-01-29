@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_app/chatbot.dart';
 import 'package:mental_health_app/home.dart';
 import 'package:mental_health_app/mood_tracker.dart';
 import 'package:mental_health_app/tasks.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => SettingsPage(), // settings route
         '/tasks': (context) => TasksPage(), // tasks route
         '/mood_tracker': (context) => MoodTrackerPage(),
+        '/chat': (context) => ChatBotPage(),
       },
     );
   }

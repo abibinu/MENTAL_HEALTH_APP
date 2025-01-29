@@ -27,6 +27,16 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[curIndex],
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF2575FC),
+        child: Icon(
+          Icons.message,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, '/chat');
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: curIndex,
         onTap: (index) {
