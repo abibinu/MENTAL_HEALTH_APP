@@ -63,3 +63,5 @@ logs/
 Dockerfile*
 docker-compose.*
 .dockerignore
+
+/dialogflow-key.json
