@@ -3,18 +3,17 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt'); // For password hashing
 const pool = require('./db'); // Import PostgreSQL connection pool
+const chatbotRouter = require('./chatbot');
 const moodLogsRouter = require('./moodLogs');
-const app = express();
-const chatbotRouter = require('./dialogflow');
 
-app.use('/api', chatbotRouter);
+const app = express();
 
 app.use(cors());
-
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api', chatbotRouter);
 app.use('/api', moodLogsRouter);
-
 
 // Default route
 app.get('/', (req, res) => {

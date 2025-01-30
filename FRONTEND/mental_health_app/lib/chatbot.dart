@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:dialog_flowtter/dialog_flowtter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatBotPage extends StatefulWidget {
   @override
@@ -9,30 +9,15 @@ class ChatBotPage extends StatefulWidget {
 }
 
 class _ChatBotPageState extends State<ChatBotPage> {
-  late DialogFlowtter dialogFlowtter;
   final TextEditingController _controller = TextEditingController();
+  late SharedPreferences sharedPreferences;
   List<Map<String, String>> messages = [];
 
   @override
   void initState() {
     super.initState();
-    _initializeDialogflow();
-  }
-
-  Future<void> _initializeDialogflow() async {
-    // Load JSON file
-    String jsonString =
-        await rootBundle.loadString('lib/assets/dialogflow-key.json');
-    Map<String, dynamic> jsonData = jsonDecode(jsonString);
-
-    // Convert JSON data to DialogAuthCredentials object
-    DialogAuthCredentials credentials =
-        DialogAuthCredentials.fromJson(jsonData);
-
-    setState(() {
-      dialogFlowtter = DialogFlowtter(
-        credentials: credentials,
-      );
+    SharedPreferences.getInstance().then((prefs) {
+      sharedPreferences = prefs;
     });
   }
 
@@ -41,30 +26,52 @@ class _ChatBotPageState extends State<ChatBotPage> {
       messages.add({"role": "user", "content": userMessage});
     });
 
-    DetectIntentResponse response = await dialogFlowtter.detectIntent(
-      queryInput: QueryInput(text: TextInput(text: userMessage)),
+    int? userId = sharedPreferences.getInt('user_id');
+    if (userId == null) {
+      setState(() {
+        messages.add({"role": "bot", "content": "User ID is not set."});
+      });
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('http://192.168.7.233:5000/api/chatbot'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "user_id": userId,
+        "message": userMessage,
+      }),
     );
 
-    String botReply = response.text ?? "I'm sorry, I didn't understand that.";
-
-    setState(() {
-      messages.add({"role": "bot", "content": botReply});
-    });
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      setState(() {
+        messages.add({"role": "bot", "content": responseData['reply']});
+      });
+    } else {
+      setState(() {
+        messages.add({
+          "role": "bot",
+          "content": "I'm sorry, I couldn't process that request."
+        });
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mood Assistant',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.green[300],
+        title: Text(
+          'Mood Assistant',
+          style: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Color(0xFF2575FC), // Primary color
+        iconTheme: IconThemeData(
+            color: Colors.white), // Set back button color to white
         centerTitle: true,
-        elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {}, icon: Icon(Icons.developer_board_outlined))
-        ],
+        elevation: 15, // Increased elevation for a more pronounced shadow
       ),
       body: Column(
         children: [
@@ -79,17 +86,27 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       isUser ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 300),
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: isUser ? Colors.blue[300] : Colors.green[300],
+                      color: isUser
+                          ? Color(0xFF2575FC)
+                          : Color(0xFF6A11CB), // Theme colors
                       borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
                     child: Text(
                       message['content']!,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -98,7 +115,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 19),
+            padding: EdgeInsets.only(left: 16, right: 16, bottom: 20, top: 10),
             child: Row(
               children: [
                 Expanded(
@@ -117,6 +134,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
+                  color: Color(0xFF6A11CB),
                   onPressed: () {
                     if (_controller.text.isNotEmpty) {
                       sendMessage(_controller.text.trim());
