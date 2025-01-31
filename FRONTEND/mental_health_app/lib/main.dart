@@ -8,7 +8,6 @@ import 'splash_screen.dart'; // Import your SplashScreen file
 import 'login.dart'; // Import your Login file
 import 'register.dart'; // Import your Register file
 import 'profile.dart'; // Import your Profile page
-import 'settings.dart'; // Import your Settings page
 
 void main() async {
   runApp(MyApp());
@@ -46,7 +45,6 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterPage(), // register page
         '/home': (context) => HomePage(), // home page
         '/profile': (context) => ProfilePage(), // profile route
-        '/settings': (context) => SettingsPage(), // settings route
         '/tasks': (context) => TasksPage(), // tasks route
         '/mood_tracker': (context) => MoodTrackerPage(),
         '/chat': (context) => ChatBotPage(),

@@ -18,7 +18,44 @@ class _ChatBotPageState extends State<ChatBotPage> {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
       sharedPreferences = prefs;
+      welcomeMessage();
     });
+  }
+
+  void welcomeMessage() async {
+    int? userId = sharedPreferences.getInt('user_id');
+    String? userName = sharedPreferences.getString('name');
+    String? userMessage =
+        "You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name ($userName) in a warm and empathetic manner. Keep responses brief, supportive, and professional. Your reply should be - 'Hi $userName, I am your virtual therapist. How can I help you today?'";
+    if (userId == null) {
+      setState(() {
+        messages.add({"role": "bot", "content": "User ID is not set."});
+      });
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('http://192.168.7.233:5000/api/chatbot'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "user_id": userId,
+        "message": userMessage,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      setState(() {
+        messages.add({"role": "bot", "content": responseData['reply']});
+      });
+    } else {
+      setState(() {
+        messages.add({
+          "role": "bot",
+          "content": "I'm sorry, I couldn't process that request."
+        });
+      });
+    }
   }
 
   Future<void> sendMessage(String userMessage) async {
@@ -67,7 +104,18 @@ class _ChatBotPageState extends State<ChatBotPage> {
           style: TextStyle(
               color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color(0xFF2575FC), // Primary color
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF6A11CB), // Purple
+                Color(0xFF2575FC), // Blue
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ), // Primary color
         iconTheme: IconThemeData(
             color: Colors.white), // Set back button color to white
         centerTitle: true,
@@ -86,7 +134,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       isUser ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 300),
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    margin: EdgeInsets.only(top: 15, left: 20, right: 20),
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: isUser

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'profile.dart';
-import 'settings.dart';
 import 'tasks.dart';
 import 'mood_tracker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,35 +13,41 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  static int curIndex = 0;
+  int curIndex = 0; // Define curIndex
+
+  @override
+  void initState() {
+    super.initState();
+    _loadIndex();
+  }
+
+  Future<void> _loadIndex() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      curIndex = sharedPreferences.getInt('curIndex') ?? 0; // Retrieve curIndex
+    });
+  }
 
   final List<Widget> pages = [
     HomePage(),
     TasksPage(),
     MoodTrackerPage(),
     ProfilePage(),
-    SettingsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[curIndex],
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF2575FC),
-        child: Icon(
-          Icons.message,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, '/chat');
-        },
-      ),
+      body: pages[curIndex], // Use curIndex to display the correct page
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: curIndex,
         onTap: (index) {
           setState(() {
             curIndex = index;
+            SharedPreferences.getInstance().then((prefs) {
+              prefs.setInt('curIndex', curIndex); // Save curIndex
+            });
           });
         },
         showUnselectedLabels: false,
@@ -63,10 +69,6 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
           ),
         ],
       ),
