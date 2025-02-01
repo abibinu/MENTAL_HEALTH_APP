@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_app/calm_music.dart';
 import 'package:mental_health_app/chatbot.dart';
 import 'package:mental_health_app/home.dart';
 import 'package:mental_health_app/mood_tracker.dart';
 import 'package:mental_health_app/tasks.dart';
 import 'main_screen.dart';
-import 'splash_screen.dart'; // Import your SplashScreen file
-import 'login.dart'; // Import your Login file
-import 'register.dart'; // Import your Register file
-import 'profile.dart'; // Import your Profile page
+import 'splash_screen.dart';
+import 'login.dart';
+import 'register.dart';
+import 'profile.dart';
 
 void main() async {
   runApp(MyApp());
@@ -36,18 +37,18 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
       ),
-      // Set initial route based on userToken
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),
-        '/login': (context) => LoginPage(), // login page
-        '/register': (context) => RegisterPage(), // register page
-        '/home': (context) => HomePage(), // home page
-        '/profile': (context) => ProfilePage(), // profile route
-        '/tasks': (context) => TasksPage(), // tasks route
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/home': (context) => HomePage(),
+        '/profile': (context) => ProfilePage(),
+        '/tasks': (context) => TasksPage(),
         '/mood_tracker': (context) => MoodTrackerPage(),
         '/chat': (context) => ChatBotPage(),
+        '/calm_music': (context) => CalmMusicPage(),
       },
     );
   }

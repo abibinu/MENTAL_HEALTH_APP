@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icons.music_note,
                     title: "Calm Sounds",
                     onTap: () {
-                      Navigator.pushNamed(context, '/calm_sounds');
+                      Navigator.pushNamed(context, '/calm_music');
                     },
                   ),
                 ],
