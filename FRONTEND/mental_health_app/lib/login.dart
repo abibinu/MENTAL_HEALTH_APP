@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
 
   Future<void> loginUser(String email, String password) async {
-    const String url = 'http://192.168.7.233:5000/login';
+    const String url = 'http://192.168.143.233:5000/login';
 
     setState(() {
       isLoading = true;
@@ -48,6 +48,7 @@ class _LoginPageState extends State<LoginPage> {
               await SharedPreferences.getInstance();
           sharedPreferences.setInt('user_id', responseData['user_id'] as int);
           sharedPreferences.setString('name', responseData['name'] as String);
+          sharedPreferences.setString('email', email);
           print(
               "stored: ${sharedPreferences.getInt('user_id')} and ${sharedPreferences.getString('name')}");
           ScaffoldMessenger.of(context).showSnackBar(

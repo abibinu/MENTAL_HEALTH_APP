@@ -26,7 +26,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     int? userId = sharedPreferences.getInt('user_id');
     String? userName = sharedPreferences.getString('name');
     String? userMessage =
-        "You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name ($userName) in a warm and empathetic manner. Keep responses brief, supportive, and professional. Your reply should be - 'Hi $userName, I am your virtual therapist. How can I help you today?'";
+        "You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name ($userName) in a warm and empathetic manner. Keep responses brief, supportive, and professional. Your reply should be - 'Hi $userName, I am your virtual therapist. How can I help you today? How was your day?'";
     if (userId == null) {
       setState(() {
         messages.add({"role": "bot", "content": "User ID is not set."});
@@ -35,7 +35,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.7.233:5000/api/chatbot'),
+      Uri.parse('http://192.168.143.233:5000/api/chatbot'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "user_id": userId,

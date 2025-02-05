@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> registerUser(String name, String email, String password) async {
-    const String url = 'http://192.168.7.233:5000/register';
+    const String url = 'http://192.168.143.233:5000/register';
     setState(() {
       isLoading = true;
     });
