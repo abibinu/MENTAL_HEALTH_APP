@@ -9,6 +9,9 @@ import 'splash_screen.dart';
 import 'login.dart';
 import 'register.dart';
 import 'profile.dart';
+import 'help_faqs.dart';
+import 'privacy_policy.dart';
+import 'delete_account.dart';
 
 void main() async {
   runApp(MyApp());
@@ -49,6 +52,9 @@ class MyApp extends StatelessWidget {
         '/mood_tracker': (context) => MoodTrackerPage(),
         '/chat': (context) => ChatBotPage(),
         '/calm_music': (context) => CalmMusicPage(),
+        '/help': (context) => HelpFAQsPage(),
+        '/privacy_policy': (context) => PrivacyPolicyPage(),
+        '/delete_account': (context) => DeleteAccountPage(),
       },
     );
   }

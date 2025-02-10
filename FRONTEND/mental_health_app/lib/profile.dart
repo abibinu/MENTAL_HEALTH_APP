@@ -59,31 +59,6 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  // ✅ Delete Account (Confirmation Dialog)
-  void _deleteAccount() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Delete Account"),
-        content: Text(
-            "Are you sure you want to delete your account? This action cannot be undone."),
-        actions: [
-          TextButton(
-            child: Text("Cancel"),
-            onPressed: () => Navigator.pop(context),
-          ),
-          TextButton(
-            child: Text("Delete", style: TextStyle(color: Colors.red)),
-            onPressed: () {
-              // Implement actual delete logic
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
   // ✅ Edit Profile (Future Implementation)
   void _editProfile() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -163,10 +138,11 @@ class _ProfilePageState extends State<ProfilePage> {
             onTap: _logout,
           ),
           ListTile(
-            leading: Icon(Icons.delete, color: Colors.red),
-            title: Text("Delete Account"),
-            onTap: _deleteAccount,
-          ),
+              leading: Icon(Icons.delete, color: Colors.red),
+              title: Text("Delete Account"),
+              onTap: () {
+                Navigator.pushNamed(context, '/delete_account');
+              }),
           SizedBox(height: 16),
 
           // ✅ Help & Support Section
