@@ -74,4 +74,34 @@ router.get('/mood-logs/analytics', async (req, res) => {
   }
 });
 
+router.get('/mood-logs/latest', async (req, res) => {
+  const { user_id } = req.query;
+
+  console.log("Received user_id:", user_id);
+
+  if (!user_id) {
+    return res.status(400).json({ message: 'User ID is required.' });
+  }
+
+  try {
+    const query = `
+      SELECT mood FROM mood_logs
+      WHERE user_id = $1
+      ORDER BY logged_at DESC
+      LIMIT 1;
+    `;
+    const result = await pool.query(query, [user_id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'No mood logs found.' });
+    }
+
+    res.status(200).json({ mood: result.rows[0].mood });
+  } catch (err) {
+    console.error('Error fetching latest mood:', err);
+    res.status(500).json({ message: 'Failed to fetch latest mood.' });
+  }
+});
+
+
 module.exports = router;

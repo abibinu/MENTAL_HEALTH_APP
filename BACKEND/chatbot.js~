@@ -35,31 +35,6 @@ async function getGeminiResponse(userMessage) {
   }
 }
 
-router.get('/chatbot/welcome/:user_id', async (req, res) => {
-  const user_id = req.params.user_id;
-
-  if (!user_id) {
-    return res.status(400).json({ error: 'User ID is required.' });
-  }
-
-  try {
-    // Fetch the username from the database
-    const userResult = await pool.query('SELECT name FROM users WHERE user_id = $1', [user_id]);
-    const username = userResult.rows[0]?.name || "User";
-
-    // System instruction for Gemini (Tuning Message)
-    const systemInstruction = `You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name (${username}) in a warm and empathetic manner. Keep responses brief, supportive, and professional.`;
-
-    // Send tuning message to Gemini
-    const botResponse = await getGeminiResponse(systemInstruction);
-
-    res.json({ reply: botResponse });
-  } catch (error) {
-    console.error('Error processing welcome message:', error);
-    res.status(500).json({ error: 'Failed to process welcome message.' });
-  }
-});
-
 
 // Chatbot Route (Handles User Queries)
 router.post('/chatbot', async (req, res) => {

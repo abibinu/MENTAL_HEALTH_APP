@@ -163,6 +163,13 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushNamed(context, '/calm_music');
                     },
                   ),
+                  QuickActionCard(
+                    icon: Icons.spa,
+                    title: "Relaxation",
+                    onTap: () {
+                      Navigator.pushNamed(context, '/relaxation');
+                    },
+                  ),
                 ],
               ),
 

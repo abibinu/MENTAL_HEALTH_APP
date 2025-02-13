@@ -38,7 +38,7 @@ async function getGeminiResponse(userMessage) {
 
 // Chatbot Route (Handles User Queries)
 router.post('/chatbot', async (req, res) => {
- console.log("Received body:", req.body);
+
   const { user_id, message } = req.body;
 
   if (!user_id || !message) {

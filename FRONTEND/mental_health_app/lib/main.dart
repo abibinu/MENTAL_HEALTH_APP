@@ -12,6 +12,7 @@ import 'profile.dart';
 import 'help_faqs.dart';
 import 'privacy_policy.dart';
 import 'delete_account.dart';
+import 'relaxation.dart';
 
 void main() async {
   runApp(MyApp());
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         '/help': (context) => HelpFAQsPage(),
         '/privacy_policy': (context) => PrivacyPolicyPage(),
         '/delete_account': (context) => DeleteAccountPage(),
+        '/relaxation': (context) => RelaxationPage(),
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ExploreMore extends StatelessWidget {
   final List<String> dailyChallenges = [
@@ -126,10 +125,6 @@ class ExploreMore extends StatelessWidget {
           _buildSectionTitle("Mental Health FAQs"),
           _buildFAQSection(),
           SizedBox(height: 16),
-
-          // Resource Library Section
-          _buildSectionTitle("Resource Library"),
-          _buildResourceSection(context),
         ],
       ),
     );
@@ -221,39 +216,6 @@ class ExploreMore extends StatelessWidget {
         );
       }).toList(),
     );
-  }
-
-  // Build Resource Section
-  Widget _buildResourceSection(BuildContext context) {
-    return Column(
-      children: resources.map((resource) {
-        return ListTile(
-          leading: Icon(Icons.link, color: Colors.purple),
-          title: Text(resource["name"]!),
-          subtitle: Text(resource["link"]!),
-          onTap: () => _launchURL(context, resource["link"]!), // Open the URL
-        );
-      }).toList(),
-    );
-  }
-
-  // Helper function to launch URLs
-  Future<void> _launchURL(BuildContext context, String url) async {
-    try {
-      final Uri uri = Uri.parse(url);
-      print("Attempting to launch URL: $uri"); // Debug print statement
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Cannot launch $url")),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error launching URL: $e")),
-      );
-    }
   }
 
   // Helper to get random item

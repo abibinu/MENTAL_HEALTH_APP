@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart'; // For charts (add to pubspec.yaml)
+import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +12,7 @@ class MoodTrackerPage extends StatefulWidget {
 class _MoodTrackerPageState extends State<MoodTrackerPage> {
   final TextEditingController _noteController = TextEditingController();
   String? _selectedMood;
-  int _userId = 0; // Set a valid integer user ID for testing
+  int _userId = 0;
   bool _isLoading = false;
   List<Map<String, dynamic>> _moodLogs = [];
   Map<String, double> _moodAnalytics = {};
@@ -28,13 +28,12 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
   Future<void> _loadUserid() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
-      _userId = sharedPreferences.getInt('user_id') ?? '' as int;
+      _userId = sharedPreferences.getInt('user_id') ?? 0;
     });
-    _fetchMoodLogs(); // Fetch mood logs after user ID is loaded
+    _fetchMoodLogs();
     _fetchMoodAnalytics();
   }
 
-  // Fetch mood logs from backend
   Future<void> _fetchMoodLogs() async {
     setState(() {
       _isLoading = true;
@@ -42,8 +41,9 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
     try {
       final response = await http.get(Uri.parse(
           'http://192.168.143.233:5000/api/mood-logs?user_id=$_userId'));
-      print('Response status: ${response.statusCode}'); // Debug log
-      print('Response body: ${response.body}'); // Debug log
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       if (response.statusCode == 200) {
         setState(() {
           _moodLogs =
@@ -55,6 +55,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
         ));
       }
     } catch (e) {
+      print('Error in _fetchMoodLogs: $e');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error fetching mood logs: $e'),
       ));
@@ -65,24 +66,55 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
     }
   }
 
-  // Fetch mood analytics from backend
   Future<void> _fetchMoodAnalytics() async {
     try {
-      final response = await http.get(
-          Uri.parse('http://192.168.143.233:5000/api/mood-logs/analytics'));
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? userId = prefs.getInt("user_id");
+
+      print('Fetching analytics for user: $userId');
+
+      final response = await http.get(Uri.parse(
+          'http://192.168.143.233:5000/api/mood-logs/analytics?user_id=$userId'));
+
+      print('Analytics Response status: ${response.statusCode}');
+      print('Analytics Response body: ${response.body}');
+
       if (response.statusCode == 200) {
-        setState(() {
-          _moodAnalytics = Map<String, double>.from(json.decode(response.body));
+        final Map<String, dynamic> rawData = json.decode(response.body);
+        print('Raw analytics data: $rawData');
+
+        final Map<String, double> convertedData = {};
+
+        rawData.forEach((key, value) {
+          try {
+            if (value is int) {
+              convertedData[key] = value.toDouble();
+            } else if (value is double) {
+              convertedData[key] = value;
+            } else {
+              convertedData[key] = double.parse(value.toString());
+            }
+            print('Converted $key: ${convertedData[key]}');
+          } catch (e) {
+            print('Error converting value for $key: $e');
+          }
         });
+
+        setState(() {
+          _moodAnalytics = convertedData;
+        });
+
+        print('Final analytics data: $_moodAnalytics');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print('Error in _fetchMoodAnalytics: $e');
+      print('Stack trace: $stackTrace');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error fetching mood analytics: $e'),
       ));
     }
   }
 
-  // Save mood log to backend
   Future<void> _saveMoodLog() async {
     if (_selectedMood == null || _noteController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,25 +122,28 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
       );
       return;
     }
+
     setState(() {
       _isLoading = true;
     });
+
     try {
       final response = await http.post(
         Uri.parse('http://192.168.143.233:5000/api/mood-logs'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          "user_id": _userId, // Include user ID in the request
+          "user_id": _userId,
           "mood": _selectedMood,
           "note": _noteController.text.trim(),
         }),
       );
+
       if (response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Mood logged successfully!')),
         );
-        _fetchMoodLogs(); // Refresh logs
-        _fetchMoodAnalytics(); // Refresh analytics
+        _fetchMoodLogs();
+        _fetchMoodAnalytics();
         _noteController.clear();
         setState(() {
           _selectedMood = null;
@@ -121,6 +156,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
         );
       }
     } catch (e) {
+      print('Error in _saveMoodLog: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
@@ -143,7 +179,6 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Mood Logging Section
               Text(
                 'Log Your Mood',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -183,14 +218,10 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                 ),
                 onPressed: _isLoading ? null : _saveMoodLog,
                 child: _isLoading
-                    ? CircularProgressIndicator(
-                        color: Colors.white,
-                      )
+                    ? CircularProgressIndicator(color: Colors.white)
                     : Text('Save Mood'),
               ),
               SizedBox(height: 20),
-
-              // Mood History Section
               Text(
                 'Mood History',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -206,17 +237,19 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                           itemCount: _moodLogs.length,
                           itemBuilder: (context, index) {
                             final log = _moodLogs[index];
-                            return ListTile(
-                              leading: Icon(Icons.mood),
-                              title: Text(log['mood']),
-                              subtitle: Text(log['note'] ?? ''),
-                              trailing: Text(log['logged_at']),
+                            return Card(
+                              elevation: 2,
+                              margin: EdgeInsets.symmetric(vertical: 4),
+                              child: ListTile(
+                                leading: Icon(Icons.mood),
+                                title: Text(log['mood']),
+                                subtitle: Text(log['note'] ?? ''),
+                                trailing: Text(log['logged_at']),
+                              ),
                             );
                           },
                         ),
               SizedBox(height: 20),
-
-              // Analytics Section
               Text(
                 'Mood Analytics',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -224,20 +257,32 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
               SizedBox(height: 10),
               _moodAnalytics.isEmpty
                   ? Text('No analytics available yet.')
-                  : PieChart(
-                      PieChartData(
-                        sections: _moodAnalytics.entries
-                            .map(
-                              (entry) => PieChartSectionData(
-                                value: entry.value,
-                                title: entry.key,
-                                color: Colors.primaries[_moodAnalytics.keys
-                                        .toList()
-                                        .indexOf(entry.key) %
-                                    Colors.primaries.length],
-                              ),
-                            )
-                            .toList(),
+                  : SizedBox(
+                      height: 300,
+                      child: PieChart(
+                        PieChartData(
+                          sections: _moodAnalytics.entries
+                              .map(
+                                (entry) => PieChartSectionData(
+                                  value: entry.value,
+                                  title:
+                                      '${entry.key}\n(${entry.value.toStringAsFixed(1)})',
+                                  titleStyle: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                  radius: 100,
+                                  color: Colors.primaries[_moodAnalytics.keys
+                                          .toList()
+                                          .indexOf(entry.key) %
+                                      Colors.primaries.length],
+                                ),
+                              )
+                              .toList(),
+                          sectionsSpace: 2,
+                          centerSpaceRadius: 40,
+                        ),
                       ),
                     ),
             ],
@@ -245,5 +290,11 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _noteController.dispose();
+    super.dispose();
   }
 }
