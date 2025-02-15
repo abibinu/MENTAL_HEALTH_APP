@@ -35,7 +35,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.143.233:5000/api/chatbot'),
+      Uri.parse('http://192.168.150.233:5000/api/chatbot'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "user_id": userId,
@@ -72,7 +72,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.7.233:5000/api/chatbot'),
+      Uri.parse('http://192.168.150.233:5000/api/chatbot'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "user_id": userId,

@@ -29,7 +29,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
     try {
       final response = await http.delete(
-        Uri.parse('http://192.168.143.233:5000/api/delete-account/$userId'),
+        Uri.parse('http://192.168.150.233:5000/api/delete-account/$userId'),
       );
 
       if (response.statusCode == 200) {

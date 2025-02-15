@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'progress_tracking.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TasksPage extends StatefulWidget {
@@ -119,7 +120,20 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tasks & Goals")),
+      appBar: AppBar(
+        title: Text("Tasks & Goals"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.bar_chart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProgressTrackingPage()),
+              );
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Padding(

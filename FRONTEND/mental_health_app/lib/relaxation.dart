@@ -65,7 +65,7 @@ class _RelaxationPageState extends State<RelaxationPage> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.143.233:5000/api/mood-logs/latest?user_id=$userId'),
+            'http://192.168.150.233:5000/api/mood-logs/latest?user_id=$userId'),
       );
 
       if (response.statusCode == 200) {
@@ -94,7 +94,7 @@ class _RelaxationPageState extends State<RelaxationPage> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://192.168.143.233:5000/api/mood-logs/analytics?user_id=$userId'),
+            'http://192.168.150.233:5000/api/mood-logs/analytics?user_id=$userId'),
       );
 
       if (response.statusCode == 200) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mental_health_app/calm_music.dart';
-import 'package:mental_health_app/chatbot.dart';
-import 'package:mental_health_app/home.dart';
-import 'package:mental_health_app/mood_tracker.dart';
-import 'package:mental_health_app/tasks.dart';
+import 'calm_music.dart';
+import 'chatbot.dart';
+import 'home.dart';
+import 'mood_tracker.dart';
+import 'tasks.dart';
 import 'main_screen.dart';
 import 'splash_screen.dart';
 import 'login.dart';

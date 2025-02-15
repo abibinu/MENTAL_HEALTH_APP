@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
 
   Future<void> loginUser(String email, String password) async {
-    const String url = 'http://192.168.143.233:5000/login';
+    const String url = 'http://192.168.150.233:5000/login';
 
     setState(() {
       isLoading = true;

@@ -40,7 +40,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
     });
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.143.233:5000/api/mood-logs?user_id=$_userId'));
+          'http://192.168.150.233:5000/api/mood-logs?user_id=$_userId'));
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
@@ -74,7 +74,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
       print('Fetching analytics for user: $userId');
 
       final response = await http.get(Uri.parse(
-          'http://192.168.143.233:5000/api/mood-logs/analytics?user_id=$userId'));
+          'http://192.168.150.233:5000/api/mood-logs/analytics?user_id=$userId'));
 
       print('Analytics Response status: ${response.statusCode}');
       print('Analytics Response body: ${response.body}');
@@ -129,7 +129,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.143.233:5000/api/mood-logs'),
+        Uri.parse('http://192.168.150.233:5000/api/mood-logs'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "user_id": _userId,
