@@ -17,11 +17,18 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _loadUserData() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = sharedPreferences.getString('name') ?? '';
-      email = sharedPreferences.getString('email') ?? '';
+      username = prefs.getString("username") ?? "User";
+      email = prefs.getString("user_email") ?? "example@email.com";
     });
+  }
+
+// ✅ Reload data when returning from Edit Profile page
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadUserData();
   }
 
   // ✅ Logout Function
@@ -61,9 +68,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // ✅ Edit Profile (Future Implementation)
   void _editProfile() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Edit Profile feature coming soon!")),
-    );
+    // Implement the edit profile logic here
+    Navigator.pushNamed(context, '/edit_profile');
   }
 
   @override
@@ -109,9 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
             leading: Icon(Icons.lock),
             title: Text("Change Password"),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Change password feature coming soon!")),
-              );
+              Navigator.pushNamed(context, '/edit_profile');
             },
           ),
           SizedBox(height: 16),

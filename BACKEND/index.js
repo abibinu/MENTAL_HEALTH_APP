@@ -54,6 +54,66 @@ app.post('/register', async (req, res) => {
     }
 });
 
+app.get('/api/users', async (req, res) => {
+    const { user_id } = req.query;
+
+    if (!user_id) {
+        return res.status(400).json({ message: 'User ID is required.' });
+    }
+
+    console.log("Received request for user ID:", user_id); // ✅ Debug print
+
+    try {
+        const query = 'SELECT name, email FROM users WHERE user_id = $1';
+        const result = await pool.query(query, [user_id]);
+
+        if (result.rows.length === 0) {
+            console.log("No user found for ID:", user_id); // ✅ Debug print
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        console.log("User data found:", result.rows[0]); // ✅ Debug print
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error('Error fetching user details:', err);
+        res.status(500).json({ message: 'Database error.' });
+    }
+});
+
+app.put('/api/users/update', async (req, res) => {
+    const { user_id, name, email, password } = req.body;
+
+    if (!user_id || !name || !email) {
+        return res.status(400).json({ message: 'User ID, name, and email are required.' });
+    }
+
+    console.log("Received update request for user ID:", user_id);
+
+    try {
+        if (password) {
+            console.log("Updating with password...");
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const query = `
+                UPDATE users SET name = $1, email = $2, password_hash = $3 WHERE user_id = $4
+            `;
+            await pool.query(query, [name, email, hashedPassword, user_id]);
+        } else {
+            console.log("Updating without password...");
+            const query = `
+                UPDATE users SET name = $1, email = $2 WHERE user_id = $3
+            `;
+            await pool.query(query, [name, email, user_id]);
+        }
+
+        console.log("Profile updated successfully!");
+        res.status(200).json({ message: 'Profile updated successfully!' });
+
+    } catch (err) {
+        console.error('Error updating user:', err);
+        res.status(500).json({ message: 'Failed to update profile.' });
+    }
+});
+
 // Login route
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
