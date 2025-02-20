@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'config.dart';
 
 class RelaxationPage extends StatefulWidget {
   @override
@@ -10,8 +11,8 @@ class RelaxationPage extends StatefulWidget {
 }
 
 class _RelaxationPageState extends State<RelaxationPage> {
-  String selectedCategory = "Stress Relief"; // ✅ Default category
-  List<Map<String, String>> suggestions = []; // ✅ Corrected type
+  String selectedCategory = "Stress Relief";
+  List<Map<String, String>> suggestions = [];
 
   final List<String> categories = [
     "Stress Relief",
@@ -64,8 +65,7 @@ class _RelaxationPageState extends State<RelaxationPage> {
 
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.150.233:5000/api/mood-logs/latest?user_id=$userId'),
+        Uri.parse('${Config.baseUrl}/api/mood-logs/latest?user_id=$userId'),
       );
 
       if (response.statusCode == 200) {
@@ -93,8 +93,7 @@ class _RelaxationPageState extends State<RelaxationPage> {
 
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.150.233:5000/api/mood-logs/analytics?user_id=$userId'),
+        Uri.parse('${Config.baseUrl}/api/mood-logs/analytics?user_id=$userId'),
       );
 
       if (response.statusCode == 200) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'config.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
     try {
       final response = await http.delete(
-        Uri.parse('http://192.168.150.233:5000/api/delete-account/$userId'),
+        Uri.parse('${Config.baseUrl}/api/delete-account/$userId'),
       );
 
       if (response.statusCode == 200) {

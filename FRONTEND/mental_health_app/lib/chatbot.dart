@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'config.dart';
 
 class ChatBotPage extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.150.233:5000/api/chatbot'),
+      Uri.parse('${Config.baseUrl}/api/chatbot'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "user_id": userId,
@@ -72,7 +73,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.150.233:5000/api/chatbot'),
+      Uri.parse('${Config.baseUrl}/api/chatbot'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         "user_id": userId,

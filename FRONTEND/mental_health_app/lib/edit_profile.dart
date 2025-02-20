@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'config.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.150.233:5000/api/users?user_id=$_userId'),
+        Uri.parse('${Config.baseUrl}/api/users?user_id=$_userId'),
       );
 
       if (response.statusCode == 200) {
@@ -85,7 +86,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
       final response = await http.put(
-        Uri.parse('http://192.168.150.233:5000/api/users/update'),
+        Uri.parse('${Config.baseUrl}/api/users/update'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(requestBody),
       );

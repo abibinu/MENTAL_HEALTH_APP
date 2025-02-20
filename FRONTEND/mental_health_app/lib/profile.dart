@@ -1,3 +1,6 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:mental_health_app/config.dart'; // Import Config for baseUrl
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,10 +21,35 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      username = prefs.getString("username") ?? "User";
-      email = prefs.getString("user_email") ?? "example@email.com";
-    });
+    int? userId =
+        prefs.getInt("user_id"); // ✅ Get user ID from SharedPreferences
+
+    if (userId == null) {
+      print("User ID not found in SharedPreferences");
+      return;
+    }
+
+    try {
+      final response = await http
+          .get(Uri.parse('${Config.baseUrl}/api/users?user_id=$userId'));
+
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        setState(() {
+          username = data["name"] ?? "User"; // ✅ Assign fetched name
+          email =
+              data["email"] ?? "example@email.com"; // ✅ Assign fetched email
+        });
+      } else {
+        print("Failed to load user data: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
   }
 
 // ✅ Reload data when returning from Edit Profile page
@@ -75,7 +103,10 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile & Settings")),
+      appBar: AppBar(
+        title: Text("Profile & Settings"),
+        automaticallyImplyLeading: false,
+      ),
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
@@ -152,6 +183,15 @@ class _ProfilePageState extends State<ProfilePage> {
           // ✅ Help & Support Section
           Text("Support",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ListTile(
+            leading: Icon(Icons.sos, color: Colors.red),
+            title: Text("Emergency Help & Resources"),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () {
+              Navigator.pushNamed(context, '/emergency_help');
+            },
+          ),
+
           ListTile(
             leading: Icon(Icons.help),
             title: Text("Help & FAQs"),

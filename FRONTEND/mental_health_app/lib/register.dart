@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'config.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -25,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> registerUser(String name, String email, String password) async {
-    const String url = 'http://192.168.150.233:5000/register';
+    const String url = '${Config.baseUrl}/register';
     setState(() {
       isLoading = true;
     });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:http/http.dart' as http;
+import 'config.dart';
 
 class ProgressTrackingPage extends StatefulWidget {
   @override
@@ -48,8 +49,7 @@ class _ProgressTrackingPageState extends State<ProgressTrackingPage> {
       }
 
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.150.233:5000/api/mood-logs/analytics?user_id=$userId'),
+        Uri.parse('${Config.baseUrl}/api/mood-logs/analytics?user_id=$userId'),
       );
 
       if (response.statusCode == 200) {

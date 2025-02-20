@@ -9,10 +9,11 @@ environment:
 
 dependencies:
   http: 0.13.6
-  shared_preferences: ^2.0.0
   fl_chart: ^0.70.2
-  url_launcher: ^6.1.10
   webview_flutter: ^4.10.0
+  url_launcher: ^6.1.14  # For calling & opening websites
+  shared_preferences: ^2.2.2  # To save emergency contacts
+  flutter_contacts: ^1.1.6  # To select contacts (Optional)
 
   flutter:
     sdk: flutter

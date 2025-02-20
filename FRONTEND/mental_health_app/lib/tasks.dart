@@ -122,6 +122,7 @@ class _TasksPageState extends State<TasksPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tasks & Goals"),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: Icon(Icons.bar_chart),
