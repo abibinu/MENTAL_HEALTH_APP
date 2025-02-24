@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'config.dart';
 
-class ChatBotPage extends StatefulWidget {
+class MalayalamChatBotPage extends StatefulWidget {
   @override
-  _ChatBotPageState createState() => _ChatBotPageState();
+  _MalayalamChatBotPageState createState() => _MalayalamChatBotPageState();
 }
 
-class _ChatBotPageState extends State<ChatBotPage> {
+class _MalayalamChatBotPageState extends State<MalayalamChatBotPage> {
   final TextEditingController _controller = TextEditingController();
   late SharedPreferences sharedPreferences;
   List<Map<String, String>> messages = [];
@@ -27,10 +27,11 @@ class _ChatBotPageState extends State<ChatBotPage> {
     int? userId = sharedPreferences.getInt('user_id');
     String? userName = sharedPreferences.getString('name');
     String? userMessage =
-        "You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name ($userName) in a warm and empathetic manner. Keep responses brief, supportive, and professional. Your reply should be - 'Hi $userName, I am your virtual therapist. How was your day?'";
+        "You are a compassionate virtual therapist. Your role is to provide emotional support, mental health advice, and motivation to users. Address the user by their name ($userName) in a warm and empathetic manner in Malayalam language. Keep responses brief, supportive, and professional. Your reply should be - 'നമസ്കാരം $userName, ഞാൻ നിങ്ങളുടെ വെർച്വൽ തെറാപ്പിസ്റ്റ് ആണ്. നിങ്ങളുടെ ദിവസം എങ്ങനെ ആയിരുന്നു?'";
     if (userId == null) {
       setState(() {
-        messages.add({"role": "bot", "content": "User ID is not set."});
+        messages
+            .add({"role": "bot", "content": "യൂസർ ഐഡി സെറ്റ് ചെയ്തിട്ടില്ല."});
       });
       return;
     }
@@ -53,7 +54,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
       setState(() {
         messages.add({
           "role": "bot",
-          "content": "I'm sorry, I couldn't process that request."
+          "content":
+              "ക്ഷമിക്കണം, എനിക്ക് ആ അഭ്യർത്ഥന പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല."
         });
       });
     }
@@ -67,7 +69,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
     int? userId = sharedPreferences.getInt('user_id');
     if (userId == null) {
       setState(() {
-        messages.add({"role": "bot", "content": "User ID is not set."});
+        messages
+            .add({"role": "bot", "content": "യൂസർ ഐഡി സെറ്റ് ചെയ്തിട്ടില്ല."});
       });
       return;
     }
@@ -90,7 +93,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
       setState(() {
         messages.add({
           "role": "bot",
-          "content": "I'm sorry, I couldn't process that request."
+          "content":
+              "ക്ഷമിക്കണം, എനിക്ക് ആ അഭ്യർത്ഥന പ്രോസസ്സ് ചെയ്യാൻ കഴിഞ്ഞില്ല."
         });
       });
     }
@@ -101,9 +105,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Mood Assistant',
+          'മൂഡ് അസിസ്റ്റന്റ്',
           style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -116,11 +120,10 @@ class _ChatBotPageState extends State<ChatBotPage> {
               end: Alignment.bottomRight,
             ),
           ),
-        ), // Primary color
-        iconTheme: IconThemeData(
-            color: Colors.white), // Set back button color to white
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
         centerTitle: true,
-        elevation: 15, // Increased elevation for a more pronounced shadow
+        elevation: 15,
       ),
       body: Column(
         children: [
@@ -138,9 +141,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                     margin: EdgeInsets.only(top: 15, left: 20, right: 20),
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: isUser
-                          ? Color(0xFF2575FC)
-                          : Color(0xFF6A11CB), // Theme colors
+                      color: isUser ? Color(0xFF2575FC) : Color(0xFF6A11CB),
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
                         BoxShadow(
@@ -155,7 +156,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                       message['content']!,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 17,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -171,7 +172,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                   child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      hintText: "  How are you feeling?",
+                      hintText: "നിങ്ങൾക്ക് എങ്ങനെ തോന്നുന്നു?",
                       hintStyle: TextStyle(color: Colors.grey),
                       filled: true,
                       fillColor: Colors.grey[200],
@@ -196,20 +197,6 @@ class _ChatBotPageState extends State<ChatBotPage> {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: Padding(
-          padding:
-              EdgeInsets.only(bottom: 70), // Adjust this value to change height
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.pushNamed(
-                  context, '/mallu_chatbot'); // Navigate to Malayalam(
-            },
-            label: Text('Malayalam'),
-            icon: Icon(Icons.chat),
-            extendedPadding:
-                EdgeInsets.symmetric(horizontal: 10), // Adjust padding
-          )),
     );
   }
 }

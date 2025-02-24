@@ -168,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Text("Account",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ListTile(
-            leading: Icon(Icons.exit_to_app, color: Colors.red),
+            leading: Icon(Icons.exit_to_app, color: Colors.blue),
             title: Text("Logout"),
             onTap: _logout,
           ),
@@ -183,6 +183,14 @@ class _ProfilePageState extends State<ProfilePage> {
           // ✅ Help & Support Section
           Text("Support",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ListTile(
+            leading: Icon(Icons.chat_bubble_rounded, color: Colors.purple),
+            title: Text("Malayalam Chatbot"),
+            trailing: Icon(Icons.arrow_forward),
+            onTap: () {
+              Navigator.pushNamed(context, '/mallu_chatbot');
+            },
+          ),
           ListTile(
             leading: Icon(Icons.sos, color: Colors.red),
             title: Text("Emergency Help & Resources"),

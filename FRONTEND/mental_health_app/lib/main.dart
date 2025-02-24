@@ -15,6 +15,7 @@ import 'delete_account.dart';
 import 'relaxation.dart';
 import 'edit_profile.dart';
 import 'emergency_help.dart';
+import 'mallu_chatbot.dart';
 
 void main() async {
   runApp(MyApp());
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/relaxation': (context) => RelaxationPage(),
         '/edit_profile': (context) => EditProfilePage(),
         '/emergency_help': (context) => EmergencyHelpPage(),
+        '/mallu_chatbot': (context) => MalayalamChatBotPage(),
       },
     );
   }
