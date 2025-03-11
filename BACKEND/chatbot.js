@@ -18,7 +18,7 @@ const pool = new Pool({
 async function getGeminiResponse(userMessage) {
   try {
     const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
       {
         contents: [{ parts: [{ text: userMessage }] }]
       },
