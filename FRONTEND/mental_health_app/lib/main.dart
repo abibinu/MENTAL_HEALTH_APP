@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_app/relaxation_game.dart';
 import 'calm_music.dart';
 import 'chatbot.dart';
 import 'home.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         '/edit_profile': (context) => EditProfilePage(),
         '/emergency_help': (context) => EmergencyHelpPage(),
         '/mallu_chatbot': (context) => MalayalamChatBotPage(),
+        '/game': (context) => RelaxationGamePage(),
       },
     );
   }

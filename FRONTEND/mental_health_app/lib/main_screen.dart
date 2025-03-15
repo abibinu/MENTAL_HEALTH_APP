@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_app/relaxation_game.dart';
 import 'home.dart';
 import 'profile.dart';
 import 'tasks.dart';
@@ -31,6 +32,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> pages = [
     HomePage(),
     TasksPage(),
+    RelaxationGamePage(),
     MoodTrackerPage(),
     ProfilePage(),
   ];
@@ -61,6 +63,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.task),
             label: 'Tasks',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.gamepad_sharp),
+            label: 'Games',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mood),
