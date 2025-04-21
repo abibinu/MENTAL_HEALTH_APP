@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () async {
                       SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
-                      sharedPreferences.setInt('curIndex', 2);
+                      sharedPreferences.setInt('curIndex', 3);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
