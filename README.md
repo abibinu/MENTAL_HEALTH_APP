@@ -1,4 +1,4 @@
-# Mental Health Companion 🧠✨
+# Mental Health Companion 
 
 A comprehensive, full-stack mental health support application designed to provide emotional guidance, mood tracking, relaxation utilities, and crisis support. 
 
@@ -6,42 +6,42 @@ Developed as a **Major Project** for the **BCA 6th Semester**.
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 In today’s fast-paced world, stress, anxiety, and mental health challenges have become increasingly prevalent. The **Mental Health Companion** is designed to serve as a secure, personal space for users to monitor their emotional well-being. By combining modern mobile application design (Flutter) with secure backend microservices (Node.js/Express) and relational database persistence (PostgreSQL), the app offers a variety of tools to guide users toward better mental health.
 
 ---
 
-## ⚡ Core Features
+##  Core Features
 
-### 1. 🤖 Dual-Language AI Virtual Therapist
+### 1.  Dual-Language AI Virtual Therapist
 * **Bilingual Emotional Support:** Integrated with Google's **Gemini-1.5-Flash** API to act as a virtual therapist in both **English** ([chatbot.dart](FRONTEND/mental_health_app/lib/chatbot.dart)) and **Malayalam** ([mallu_chatbot.dart](FRONTEND/mental_health_app/lib/mallu_chatbot.dart)).
 * **Context-Aware Conversations:** Personalized greeting based on the user's registered name and a warm, empathetic therapy-focused prompting style.
 * **Persistent Logs:** All chat histories are securely logged on the PostgreSQL server for reference.
 
-### 2. 📊 Mood Tracker & Interactive Analytics
+### 2.  Mood Tracker & Interactive Analytics
 * **Daily Mood Logging:** Users select from various emotional states (Happy, Sad, Angry, Calm, Anxious) and append a personal note ([mood_tracker.dart](FRONTEND/mental_health_app/lib/mood_tracker.dart)).
 * **Data Visualization:** Built-in analytics engine that groups mood history and renders a clean, interactive **Pie Chart** using `fl_chart` to highlight emotional trends ([progress_tracking.dart](FRONTEND/mental_health_app/lib/progress_tracking.dart)).
 
-### 3. 🎵 Calm Sounds Hub
+### 3.  Calm Sounds Hub
 * **Audio Streaming:** Calming soundscapes categorized into nature sounds (Gentle Rain, Ocean Waves, Stream Water, Calm Forest, Birds Chirping) and acoustic melodies (Soft Piano, Meditation Bells) ([calm_music.dart](FRONTEND/mental_health_app/lib/calm_music.dart)).
 * **Background Playback:** Utilizes `just_audio` and `audio_service` to allow seamless background streaming while navigating other parts of the app.
 
-### 4. 🎮 Relaxation Game: "Calm Tap"
+### 4.  Relaxation Game: "Calm Tap"
 * **Mindfulness Tap Utility:** An interactive game where a circle expands and contracts in a slow, rhythmic 3-second cycle simulating breathing. Users tap when the circle reaches its ideal size ([relaxation_game.dart](FRONTEND/mental_health_app/lib/relaxation_game.dart)).
 * **Immediate Feedback:** Promotes mindfulness and focus, helping users regulate breathing patterns during stressful episodes.
 
-### 5. 🚨 Emergency Help Center
+### 5.  Emergency Help Center
 * **Crisis Hotlines:** Direct access to major Indian national helplines including snehi, AASRA, iCall, Kiran, and the Vandrevala Foundation ([emergency_help.dart](FRONTEND/mental_health_app/lib/emergency_help.dart)).
 * **One-Tap Quick Actions:** Direct dial and SMS capabilities using `url_launcher`.
 * **Custom Emergency Contacts:** Users can add and manage personal emergency contacts, stored securely using `SharedPreferences`.
 
-### 6. 📝 Habit & Daily Task Planner
+### 6.  Habit & Daily Task Planner
 * **Daily Checklists:** An interactive task dashboard to complete micro-habits (drinking water, taking a walk, listing gratitudes) ([tasks.dart](FRONTEND/mental_health_app/lib/tasks.dart)).
 * **Progress Tracking & Achievements:** Gamified achievements like "Goal Master" or "Halfway There" dynamically unlocked based on task completion rates.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology | Key Packages / Libraries |
 | :--- | :--- | :--- |
@@ -52,7 +52,7 @@ In today’s fast-paced world, stress, anxiety, and mental health challenges hav
 
 ---
 
-## 📐 System Architecture & Diagrams
+##  System Architecture & Diagrams
 
 The project employs a robust **Client-Server Architecture** utilizing HTTP REST APIs for communication.
 
@@ -67,7 +67,7 @@ The project employs a robust **Client-Server Architecture** utilizing HTTP REST 
 
 ---
 
-## 🗄️ Database Schema
+##  Database Schema
 
 Run the following SQL commands to initialize the PostgreSQL database schema for the application:
 
@@ -102,9 +102,9 @@ CREATE TABLE chat_logs (
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
-### 🔌 Backend Setup
+###  Backend Setup
 1. Navigate to the backend directory:
    ```bash
    cd BACKEND
@@ -128,7 +128,7 @@ CREATE TABLE chat_logs (
    ```
    *The server runs by default on `http://localhost:5000`.*
 
-### 📱 Frontend Setup
+###  Frontend Setup
 1. Navigate to the Flutter app directory:
    ```bash
    cd FRONTEND/mental_health_app
@@ -150,7 +150,7 @@ CREATE TABLE chat_logs (
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 MENTAL_HEALTH_APP/
@@ -184,7 +184,7 @@ MENTAL_HEALTH_APP/
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 * **Appointment Booking:** Add scheduling modules for certified clinical psychologists and mental health counselors.
 * **Sentiment Trend Alerts:** Automatic warning triggers to reach out to emergency contacts if logged mood trends decline consecutively for 7 days.
 * **Offline Synchronization:** Local SQLite database support to sync local data seamlessly back to the main PostgreSQL server when network connectivity is restored.
